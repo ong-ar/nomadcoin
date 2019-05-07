@@ -7,4 +7,8 @@ nodejs를 사용하여 비트코인 클론하기
 ```bash
 # 블록 해시 만들기 위한 패키지
 yarn add crypto-js
+
+yarn add express morgan body-parser
+
+yarn global add nodemon
 ```
