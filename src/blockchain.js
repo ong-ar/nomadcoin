@@ -69,7 +69,7 @@ const createNewBlock = data => {
 };
 
 const getBlocksHash = block =>
-  createHash(block.index, block.previousBlock, block.timestamp, block.data);
+  createHash(block.index, block.previousHash, block.timestamp, block.data);
 
 const isNewBlockValid = (candidateBlock, latestBlock) => {
   if (!isNewStructureValid(candidateBlock)) {
