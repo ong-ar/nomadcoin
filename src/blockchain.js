@@ -1,3 +1,5 @@
+const CryptoJS = require("crypto-js");
+
 // new Block(1, 0, 0, 420490124, 'hello') 모든 값을 해시로 만듬
 // 이전 블록 해시를 현재 블록에 넣음으로써 체인이 이뤄진다.
 class Block {
@@ -24,3 +26,38 @@ let blockchain = [genesisBlock];
 
 // console.log(blockchain);
 // node src/blockchain.js
+
+// 마지막 블록 정보
+const getLastBlock = () => blockchain[blockchain.length - 1];
+
+// 현재 타임 가져오기
+const getTimeStamp = () => new Date().getTime();
+
+// 블록 해시 만들기
+const createHash = (index, previousHash, timestamp, data) =>
+  CryptoJS.SHA256(index + previousHash + timestamp + data).toString();
+
+// 블록 생성
+const createNewBlock = data => {
+  // 마지막 블록 정보
+  const previousBlock = getLastBlock();
+  // 마지막 블록 index + 1
+  const newBlockIndex = previousBlock.index + 1;
+  // 현재 시간
+  const newTimestamp = getTimeStamp();
+  // 현재 블록 해시 생성
+  const newHash = createHash(
+    newBlockIndex,
+    previousBlock.hash,
+    newTimestamp,
+    data
+  );
+  const newBlock = new Block(
+    newBlockIndex,
+    newHash,
+    previousBlock.hash,
+    newTimestamp,
+    data
+  );
+  return newBlock;
+};
