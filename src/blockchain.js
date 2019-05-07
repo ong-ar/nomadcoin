@@ -33,6 +33,9 @@ const getLastBlock = () => blockchain[blockchain.length - 1];
 // 현재 타임 가져오기
 const getTimeStamp = () => new Date().getTime();
 
+// 블록체인 정보
+const getBlockchain = () => blockchain;
+
 // 블록 해시 만들기
 const createHash = (index, previousHash, timestamp, data) =>
   CryptoJS.SHA256(
@@ -112,4 +115,25 @@ const isChainValid = candidateChain => {
     }
   }
   return true;
+};
+
+const replaceChain = candidateChain => {
+  if (
+    isChainValid(candidateChain) &&
+    candidateChain.length > getBlockchain().length
+  ) {
+    blockchain = candidateChain;
+    return true;
+  } else {
+    return false;
+  }
+};
+
+const addBlockToChain = candidateBlock => {
+  if (isNewBlockValid(candidateBlock, getLastBlock())) {
+    getBlockchain().push(candidateBlock);
+    return true;
+  } else {
+    return false;
+  }
 };
