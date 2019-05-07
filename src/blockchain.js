@@ -35,7 +35,9 @@ const getTimeStamp = () => new Date().getTime();
 
 // 블록 해시 만들기
 const createHash = (index, previousHash, timestamp, data) =>
-  CryptoJS.SHA256(index + previousHash + timestamp + data).toString();
+  CryptoJS.SHA256(
+    index + previousHash + timestamp + JSON.stringify(data)
+  ).toString();
 
 // 블록 생성
 const createNewBlock = data => {
@@ -79,4 +81,14 @@ const isNewBlockValid = (candidateBlock, latestBlock) => {
     return false;
   }
   return true;
+};
+
+const isNewStructureValid = block => {
+  return (
+    typeof block.index === "number" &&
+    typeof block.hash === "string" &&
+    typeof block.previousHash === "string" &&
+    typeof block.timestamp === "number" &&
+    typeof block.data === "string"
+  );
 };
