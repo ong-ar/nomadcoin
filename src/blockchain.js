@@ -95,3 +95,21 @@ const isNewStructureValid = block => {
     typeof block.data === "string"
   );
 };
+
+const isChainValid = candidateChain => {
+  const isGenesisValid = block => {
+    return JSON.stringify(block) === JSON.stringify(genesisBlock);
+  };
+  if (!isGenesisValid(candidateChain[0])) {
+    console.log(
+      "The candidateChains's genesisBlock is not the same as our genesisBlock"
+    );
+    return false;
+  }
+  for (let i = 1; i < candidateChain.length; i++) {
+    if (!isNewBlockValid(candidateChain[i], candidateChain[i - 1])) {
+      return false;
+    }
+  }
+  return true;
+};
