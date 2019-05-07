@@ -1,0 +1,10 @@
+{
+  "name": "nomadcoin",
+  "version": "1.0.0",
+  "description": "clone bitcoin using nodejs",
+  "main": "src/server.js",
+  "repository": "https://github.com/ong-ar/nomadcoin.git",
+  "author": "ong-ar <reclusis@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
