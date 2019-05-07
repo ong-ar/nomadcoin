@@ -12,3 +12,15 @@ yarn add express morgan body-parser
 
 yarn global add nodemon
 ```
+
+## scripts
+
+```bash
+# 개발 모드 실행
+yarn run dev
+```
+
+## routes
+
+1. 블록체인 정보 가져오기 GET /blocks
+2. 블록체인 생성 POST /blocks { data : "" }
