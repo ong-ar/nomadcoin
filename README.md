@@ -11,6 +11,8 @@ yarn add crypto-js
 yarn add express morgan body-parser
 
 yarn global add nodemon
+
+yarn add ws
 ```
 
 ## scripts
