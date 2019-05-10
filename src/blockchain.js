@@ -28,7 +28,7 @@ let blockchain = [genesisBlock];
 // node src/blockchain.js
 
 // 마지막 블록 정보
-const getLastBlock = () => blockchain[blockchain.length - 1];
+const getNewestBlock = () => blockchain[blockchain.length - 1];
 
 // 현재 타임 가져오기
 const getTimeStamp = () => new Date().getTime();
@@ -45,7 +45,7 @@ const createHash = (index, previousHash, timestamp, data) =>
 // 블록 생성
 const createNewBlock = data => {
   // 마지막 블록 정보
-  const previousBlock = getLastBlock();
+  const previousBlock = getNewestBlock();
   // 마지막 블록 index + 1
   const newBlockIndex = previousBlock.index + 1;
   // 현재 시간
@@ -71,8 +71,8 @@ const createNewBlock = data => {
 const getBlocksHash = block =>
   createHash(block.index, block.previousHash, block.timestamp, block.data);
 
-const isNewBlockValid = (candidateBlock, latestBlock) => {
-  if (!isNewStructureValid(candidateBlock)) {
+const isBlockValid = (candidateBlock, latestBlock) => {
+  if (!isBlockStructureValid(candidateBlock)) {
     console.log("The candidate block structure is not valid");
     return false;
   } else if (latestBlock.index + 1 !== candidateBlock.index) {
@@ -90,7 +90,7 @@ const isNewBlockValid = (candidateBlock, latestBlock) => {
   return true;
 };
 
-const isNewStructureValid = block => {
+const isBlockStructureValid = block => {
   return (
     typeof block.index === "number" &&
     typeof block.hash === "string" &&
@@ -111,7 +111,7 @@ const isChainValid = candidateChain => {
     return false;
   }
   for (let i = 1; i < candidateChain.length; i++) {
-    if (!isNewBlockValid(candidateChain[i], candidateChain[i - 1])) {
+    if (!isBlockValid(candidateChain[i], candidateChain[i - 1])) {
       return false;
     }
   }
@@ -131,7 +131,7 @@ const replaceChain = candidateChain => {
 };
 
 const addBlockToChain = candidateBlock => {
-  if (isNewBlockValid(candidateBlock, getLastBlock())) {
+  if (isBlockValid(candidateBlock, getNewestBlock())) {
     getBlockchain().push(candidateBlock);
     return true;
   } else {
@@ -141,6 +141,10 @@ const addBlockToChain = candidateBlock => {
 
 module.exports = {
   getBlockchain,
-  getLastBlock,
-  createNewBlock
+  getNewestBlock,
+  isBlockValid,
+  isBlockStructureValid,
+  createNewBlock,
+  addBlockToChain,
+  replaceChain
 };
